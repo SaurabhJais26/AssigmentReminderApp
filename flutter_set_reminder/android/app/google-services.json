@@ -1,0 +1,39 @@
+{
+    "project_info": {
+      "project_number": "307663421985",
+      "project_id": "testing-67d5e",
+      "storage_bucket": "testing-67d5e.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:307663421985:android:86b479f5f548624a32d960",
+          "android_client_info": {
+            "package_name": "com.example.flutter_set_reminder"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "307663421985-01rtdhp6c55ue3t2vin0ssvketrt1k9m.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyAsxIYAbpEuIBMPiELTULM6rYidhZzpbeE"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "307663421985-01rtdhp6c55ue3t2vin0ssvketrt1k9m.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
