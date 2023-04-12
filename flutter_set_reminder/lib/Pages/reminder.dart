@@ -1,10 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_set_reminder/Pages/welcome.dart';
 import 'package:flutter_set_reminder/signIn.dart';
+import 'package:intl/intl.dart';
+
+import '../services/notify_service.dart';
+
+DateTime scheduleTime = DateTime.now();
 
 class ReminderPage extends StatefulWidget {
   final User user;
@@ -27,6 +34,7 @@ class _ReminderPageState extends State<ReminderPage> {
     super.initState();
     _user = FirebaseAuth.instance.currentUser;
     _firestore = FirebaseFirestore.instance;
+    //date
   }
 
   @override
@@ -89,6 +97,12 @@ class _ReminderPageState extends State<ReminderPage> {
                           return ListTile(
                             title: Text(document['title']),
                             subtitle: Text(document['description']),
+                            leading: Container(
+                              child: DatePickerTxt(
+                                title: document['title'],
+                                description: document['description'],
+                              ),
+                            ),
                             trailing: IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () => _deleteReminder(document.id),
@@ -158,6 +172,42 @@ class _ReminderPageState extends State<ReminderPage> {
     await _firestore.collection('reminders').doc(reminderId).delete();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Reminder deleted')),
+    );
+  }
+}
+
+class DatePickerTxt extends StatefulWidget {
+  String title;
+  String description;
+  DatePickerTxt({
+    Key? key,
+    required String this.title,
+    required String this.description,
+  }) : super(key: key);
+
+  @override
+  State<DatePickerTxt> createState() => _DatePickerTxtState();
+}
+
+class _DatePickerTxtState extends State<DatePickerTxt> {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () async {
+        await DatePicker.showDateTimePicker(
+          context,
+          showTitleActions: true,
+          onChanged: (date) => scheduleTime = date,
+          onConfirm: (date) {},
+        );
+        debugPrint('Notification Scheduled for $scheduleTime');
+        NotificationService().scheduleNotification(
+          title: widget.title,
+          body: widget.description,
+          scheduledNotificationDateTime: scheduleTime,
+        );
+      },
+      child: const Icon(Icons.add_alarm),
     );
   }
 }

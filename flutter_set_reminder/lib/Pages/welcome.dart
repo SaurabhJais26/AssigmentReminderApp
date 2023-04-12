@@ -19,7 +19,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return FirebaseAuth.instance.currentUser == null
         ? Scaffold(
             appBar: AppBar(
-              title: Text('Remind Me'),
+              title: Text('Access Your Account'),
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
